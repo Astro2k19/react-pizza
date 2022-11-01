@@ -1,0 +1,27 @@
+.pagination {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fill, 50px);
+  margin-top: 25px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.active {
+  background-color: orange;
+}
+
+.prev,
+.next {
+  font-size: 20px;
+  font-weight: 700;
+}
