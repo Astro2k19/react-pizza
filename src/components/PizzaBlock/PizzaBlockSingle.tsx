@@ -29,7 +29,7 @@ interface ICartPizza {
 const PizzaBlockSingle: React.FC = () => {
     const params = useParams();
 
-    if (!params) return <p>hello</p>;
+    if (!params) return null;
 
     const [id, productId] = params?.pizzaId?.split('_') || '';
 
@@ -37,7 +37,7 @@ const PizzaBlockSingle: React.FC = () => {
     const [status, setStatus] = React.useState<string>('loading');
     const dispatch = useDispatch();
 
-    const count = useSelector(state => selectCountByProductId(state, productId)) ?? 0;
+    const count: number = useSelector(state => selectCountByProductId(state, productId)) ?? 0;
     const items = useSelector(state => state.cart.items);
 
     React.useEffect(() => {

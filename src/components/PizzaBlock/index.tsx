@@ -5,10 +5,21 @@ import styles from './PizzaBlock.module.scss';
 import {selectPizzaById} from "../../redux/slices/PizzasSlice.js";
 import {selectCountByProductId} from "../../redux/slices/cartSlice";
 import {Link} from "react-router-dom";
+import {ICart} from "../CartItem";
 
 export const typesName = ['тонкое', 'традиционное'];
 
-const PizzaBlock = React.memo( ({pizzaId}) => {
+interface IPizzaBlock {
+    id: number
+    productId: string
+    imageUrl: string
+    title: string
+    types: number[]
+    sizes: number[]
+    prices: number[]
+}
+
+const PizzaBlock: React.FC = React.memo( ({pizzaId}) => {
     const {id, productId, imageUrl, title, types, sizes, prices} = useSelector(state => selectPizzaById(state, pizzaId));
 
     const [pizzaState, setPizzaState] = React.useState({
@@ -22,7 +33,7 @@ const PizzaBlock = React.memo( ({pizzaId}) => {
 
     const items = useSelector(state => state.cart.items);
 
-    const handlePizzaState = (newPizzaState) => {
+    const handlePizzaState = (newPizzaState: ICart) => {
         setPizzaState((prevPizzaState) => ({
             ...prevPizzaState,
             ...newPizzaState,

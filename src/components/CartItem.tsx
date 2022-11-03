@@ -1,7 +1,19 @@
 import { useDispatch } from 'react-redux';
 import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice';
+import * as React from "react";
 
-const CartItem = ({ productId, imageUrl, title, price, type, size, count }) => {
+export interface ICart {
+    productId: number
+    imageUrl: string
+    title: string
+    price: number
+    type: string
+    size: number
+    count: number
+}
+
+
+const CartItem: React.FC<ICart> = ({ productId, imageUrl, title, price, type, size, count }) => {
   const dispatch = useDispatch();
 
   const onIncreaseCount = () => {

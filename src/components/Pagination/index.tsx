@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as React from 'react';
 import { setPage } from '../../redux/slices/filterSlice';
 
-const Pagination = () => {
+const Pagination: React.FC = () => {
   const { pageCount } = useSelector((state) => state.pizzas);
   const page = useSelector((state) => state.filter.currentPage);
   const dispatch = useDispatch();
 
-  const [currentPage, setCurrentPage] = React.useState(page);
+  const [currentPage, setCurrentPage] = React.useState<number>(page);
 
-  const changeCurrentPage = (page) => {
+  const changeCurrentPage = (page: number) => {
     setCurrentPage(page);
   };
 
   const setNextPage = () => {
-    setCurrentPage((prevState) =>
+    setCurrentPage((prevState: number) =>
       prevState + 1 <= pageCount ? prevState + 1 : pageCount
     );
   };
@@ -29,7 +29,7 @@ const Pagination = () => {
   }, [currentPage]);
 
   const pagination = Array(pageCount)
-    .fill()
+    .fill(undefined)
     .map((_, index) => {
       const fixedIndex = index + 1;
       const isCurrent = currentPage === fixedIndex;

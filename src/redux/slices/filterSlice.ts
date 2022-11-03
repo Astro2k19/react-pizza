@@ -60,7 +60,7 @@ const filterSlice = createSlice({
 
         return {
           payload: {
-            currentCategory: Number(params.currentPage),
+            currentPage: Number(params.currentPage),
             currentCategory: Number(params.currentCategory),
             sort: {
               sortBy: params.sortBy,

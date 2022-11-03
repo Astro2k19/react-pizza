@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
+    "@types/lodash.debounce": "^4.0.7",
     "lodash.debounce": "^4.0.8",
     "qs": "^6.11.0",
     "react": "^18.2.0",

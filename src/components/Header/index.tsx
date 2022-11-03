@@ -4,16 +4,15 @@ import Logo from '../../assets/img/pizza-logo.svg';
 import Search from '../Search';
 import { useSelector } from 'react-redux';
 import {createSelector} from "@reduxjs/toolkit";
+import React from "react";
 
-export default function Header() {
+const Header: React.FC = () => {
   const selectTotalPrice = createSelector([(state) => state.cart.totalPrice], (totalPrice) => totalPrice);
   const selectTotalQuantity = createSelector([(state) => state.cart.totalQuantity], (totalQuantity) => totalQuantity);
 
-  const totalPrice = useSelector(selectTotalPrice);
+  const totalPrice: number = useSelector(selectTotalPrice);
 
-  const pathname = window.location.pathname;
-
-  const totalQuantity = useSelector(selectTotalQuantity);
+  const totalQuantity: number = useSelector(selectTotalQuantity);
 
   return (
     <div className={styles.header}>
@@ -66,3 +65,5 @@ export default function Header() {
     </div>
   );
 }
+
+export default Header;

@@ -13,11 +13,11 @@ const categories = [
   'Закрытые',
 ];
 
-export default function Categories() {
+ const Categories: React.FC = () => {
   const { currentCategory } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
-  const toggleCategory = (index) => {
+  const toggleCategory = (index: number) => {
     dispatch(setCategory(index));
     dispatch(setPage(1));
   };
@@ -38,3 +38,5 @@ export default function Categories() {
     </div>
   );
 }
+
+export default Categories

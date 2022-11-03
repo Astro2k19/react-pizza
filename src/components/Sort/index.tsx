@@ -3,24 +3,33 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSortBy, setFilterOrder } from '../../redux/slices/filterSlice';
 import styles from './Sort.module.scss';
 
-export const sortOrderList = [
+interface ISortListItem {
+  value: string
+  sortBy: string
+}
+
+export const sortOrderList: ISortListItem[] = [
   { value: 'популярности', sortBy: 'rating' },
   { value: 'цене', sortBy: 'price' },
   { value: 'алфавиту', sortBy: 'title' },
 ];
 
 export default function Sort() {
-  const [isOpen, setIsOpen] = React.useState(true);
+  const [isOpen, setIsOpen] = React.useState<boolean>(true);
   const dispatch = useDispatch();
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const { value, sortOrder, sortBy } = useSelector(
     (state) => state.filter.sort
   );
 
+  const onClickItem = () => {
+
+  }
+
   React.useEffect(() => {
-    const closeSort = ({ target }) => {
-      if (sortRef.current && !sortRef.current.contains(target)) {
+    const closeSort = ({target}: MouseEvent) => {
+      if (sortRef.current && !sortRef.current.contains(target as Node)) {
         setIsOpen(false);
       }
     };
@@ -37,6 +46,7 @@ export default function Sort() {
       <div className={styles.label}>
         <button
           className={`${styles.sortDirection} ${sortOrder}`}
+            // @ts-ignore
           onClick={() => dispatch(setFilterOrder())}
           title={
             sortOrder ? 'Сортировка по возрастанию' : 'Сортировка по убыванию'
