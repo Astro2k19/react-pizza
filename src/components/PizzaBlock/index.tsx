@@ -19,10 +19,20 @@ interface IPizzaBlock {
     prices: number[]
 }
 
-const PizzaBlock: React.FC = React.memo( ({pizzaId}) => {
-    const {id, productId, imageUrl, title, types, sizes, prices} = useSelector(state => selectPizzaById(state, pizzaId));
+interface IPizzaBlockProps {
+    pizzaId: number
+}
 
-    const [pizzaState, setPizzaState] = React.useState({
+interface IPizzaState {
+    price?: number
+    type?: number
+    size?: number
+}
+
+const PizzaBlock: React.FC<IPizzaBlockProps> = React.memo( ({pizzaId}) => {
+    const {id, productId, imageUrl, title, types, sizes, prices}: IPizzaBlock = useSelector(state => selectPizzaById(state, pizzaId));
+
+    const [pizzaState, setPizzaState] = React.useState<IPizzaState>({
         price: prices[0],
         type: types[0],
         size: sizes[0],
@@ -33,7 +43,7 @@ const PizzaBlock: React.FC = React.memo( ({pizzaId}) => {
 
     const items = useSelector(state => state.cart.items);
 
-    const handlePizzaState = (newPizzaState: ICart) => {
+    const handlePizzaState = (newPizzaState: IPizzaState) => {
         setPizzaState((prevPizzaState) => ({
             ...prevPizzaState,
             ...newPizzaState,
@@ -41,13 +51,16 @@ const PizzaBlock: React.FC = React.memo( ({pizzaId}) => {
     };
 
     const onAddItem = () => {
+
+        const pizzaType = pizzaState.type ?? 0;
+
         const item = {
             id: items.length + 1,
             productId,
             title,
             imageUrl,
             price: pizzaState.price,
-            type: typesName[pizzaState.type],
+            type: typesName[pizzaType],
             size: pizzaState.size,
         };
 
@@ -63,7 +76,7 @@ const PizzaBlock: React.FC = React.memo( ({pizzaId}) => {
             </Link>
             <div className={styles.selector}>
                 <ul>
-                    {types.map((typeIndex) => (
+                    {types.map((typeIndex: number) => (
                         <li
                             key={typeIndex}
                             className={pizzaState.type === typeIndex ? styles.active : ''}
@@ -74,7 +87,7 @@ const PizzaBlock: React.FC = React.memo( ({pizzaId}) => {
                     ))}
                 </ul>
                 <ul>
-                    {sizes.map((size, sizeIndex) => (
+                    {sizes.map((size: number, sizeIndex: number) => (
                         <li
                             key={size}
                             className={pizzaState.size === size ? styles.active : ''}

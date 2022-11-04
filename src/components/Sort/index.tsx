@@ -23,10 +23,6 @@ export default function Sort() {
     (state) => state.filter.sort
   );
 
-  const onClickItem = () => {
-
-  }
-
   React.useEffect(() => {
     const closeSort = ({target}: MouseEvent) => {
       if (sortRef.current && !sortRef.current.contains(target as Node)) {
