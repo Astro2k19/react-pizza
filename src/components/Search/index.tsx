@@ -25,7 +25,6 @@ const Search: React.FC = () => {
   };
 
   const clearSearchInput: React.MouseEventHandler = (e: React.MouseEvent<HTMLImageElement>) => {
-    // console.log(e.)
     setSearchValue('');
     dispatch(setSearch(''));
     inputRef.current?.focus();

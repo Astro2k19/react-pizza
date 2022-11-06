@@ -156,6 +156,11 @@ body {
             display: none;
           }
         }
+
+        &[disabled] {
+          opacity: 0.5;
+          pointer-events: none;
+        }
       }
 
       b {
@@ -205,6 +210,7 @@ body {
           border-color: darken($color: $gray-line, $amount: 80);
           background-color: darken($color: $gray-line, $amount: 80);
         }
+
       }
     }
   }

@@ -1,25 +1,42 @@
-import { createSlice, current } from '@reduxjs/toolkit';
-import { sortOrderList } from '../../components/Sort/index';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const initialFilter = {
-  searchValue: '',
+enum SortOrderEnum {
+  ASC_ORDER = "asc",
+  DESC_ORDER = "desc",
+}
+
+enum SortTypeEnum {
+  RATING_TYPE = "rating",
+  PRICE_TYPE = "price",
+  TITLE_TYPE = "title",
+}
+
+export type SortType = {
+  sortBy: SortTypeEnum;
+  sortOrder: SortOrderEnum;
+  value?: string;
+};
+
+export interface IFilterSliceState {
+  searchValue?: string;
+  currentPage: number;
+  currentCategory: number;
+  sort: SortType;
+}
+
+export const initialFilter: IFilterSliceState = {
+  searchValue: "",
   currentPage: 1,
   currentCategory: 0,
   sort: {
-    sortBy: 'rating',
-    sortOrder: 'desc',
+    sortBy: SortTypeEnum.RATING_TYPE,
+    sortOrder: SortOrderEnum.DESC_ORDER,
+    value: "популярности",
   },
 };
 
-Object.defineProperty(initialFilter.sort, 'value', {
-  configurable: true,
-  enumerable: false,
-  writable: true,
-  value: 'популярности',
-});
-
 const filterSlice = createSlice({
-  name: 'filter',
+  name: "filter",
   initialState: initialFilter,
   reducers: {
     setPage(state, action) {
@@ -33,39 +50,35 @@ const filterSlice = createSlice({
       state.sort.sortBy = payload.sortBy;
     },
     setFilterOrder(state) {
-      let changedOrder;
+      let changedOrder: SortOrderEnum;
 
       switch (state.sort.sortOrder) {
-        case 'desc':
-          changedOrder = 'asc';
+        case "desc":
+          changedOrder = SortOrderEnum.ASC_ORDER;
           break;
-        case 'asc':
-          changedOrder = 'desc';
+        case "asc":
+          changedOrder = SortOrderEnum.DESC_ORDER;
           break;
         default:
-          changedOrder = 'desc';
+          changedOrder = SortOrderEnum.DESC_ORDER;
           break;
       }
       state.sort.sortOrder = changedOrder;
     },
     setAllFilters: {
-      reducer(state, { payload }) {
-        state.sort = payload.sort;
-        state.currentCategory = payload.currentCategory;
+      reducer(state, action: PayloadAction<IFilterSliceState>) {
+        return action.payload;
       },
       prepare(params) {
-        const value = sortOrderList.find(
-          (item) => item.sortBy === params.sortBy
-        ).value;
-
         return {
           payload: {
+            searchValue: params.searchValue,
             currentPage: Number(params.currentPage),
             currentCategory: Number(params.currentCategory),
             sort: {
               sortBy: params.sortBy,
               sortOrder: params.sortOrder,
-              value,
+              value: params.value,
             },
           },
         };

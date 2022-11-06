@@ -1,21 +1,23 @@
-import React from 'react';
-import styles from './Category.module.scss';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCategory, setPage } from '../../redux/slices/filterSlice';
-import {createSelector} from "@reduxjs/toolkit";
+import React from "react";
+import styles from "./Category.module.scss";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { setCategory, setPage } from "../../redux/slices/filterSlice";
+
+interface ICategories {
+  currentCategory: number;
+}
 
 const categories = [
-  'Все',
-  'Мясные',
-  'Вегетарианская',
-  'Гриль',
-  'Острые',
-  'Закрытые',
+  "Все",
+  "Мясные",
+  "Вегетарианская",
+  "Гриль",
+  "Острые",
+  "Закрытые",
 ];
 
- const Categories: React.FC = () => {
-  const { currentCategory } = useSelector((state) => state.filter);
-  const dispatch = useDispatch();
+const Categories: React.FC<ICategories> = React.memo(({ currentCategory }) => {
+  const dispatch = useAppDispatch();
 
   const toggleCategory = (index: number) => {
     dispatch(setCategory(index));
@@ -28,7 +30,7 @@ const categories = [
         {categories.map((category, index) => (
           <li
             key={index}
-            className={currentCategory === index ? styles.active : ''}
+            className={currentCategory === index ? styles.active : ""}
             onClick={() => toggleCategory(index)}
           >
             {category}
@@ -37,6 +39,6 @@ const categories = [
       </ul>
     </div>
   );
-}
+});
 
-export default Categories
+export default Categories;

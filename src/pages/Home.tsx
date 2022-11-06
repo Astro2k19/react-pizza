@@ -1,30 +1,37 @@
-import React from 'react';
-import Categories from '../components/Сategory/index.js';
-import Sort from '../components/Sort/index.js';
-import PizzaBlock from '../components/PizzaBlock/index.js';
-import Skeleton from '../components/PizzaBlock/Skeleton';
-import styles from '../App.module.scss';
-import Pagination from '../components/Pagination/index.js';
+import React from "react";
+import Categories from "../components/Сategory/index";
+import Sort from "../components/Sort/index";
+import PizzaBlock from "../components/PizzaBlock/index";
+import Skeleton from "../components/PizzaBlock/Skeleton";
+import styles from "../App.module.scss";
+import Pagination from "../components/Pagination/index";
 
-import {useNavigate, useParams} from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPizzas, selectPizzasIds } from '../redux/slices/PizzasSlice';
-import QueryString from 'qs';
-import { setAllFilters } from '../redux/slices/filterSlice';
-import { checkQueryParams } from '../utils/utils';
-import Error from '../components/Error.js';
+import { useNavigate } from "react-router-dom";
+import {
+  fetchPizzas,
+  selectPizzasIds,
+  StatusEnum,
+} from "../redux/slices/PizzasSlice";
+import QueryString from "qs";
+import { setAllFilters } from "../redux/slices/filterSlice";
+import { checkQueryParams } from "../utils/utils";
+import Error from "../components/Error";
+import { EntityId } from "@reduxjs/toolkit";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const Home = () => {
-  const isSearch = React.useRef(false);
-  const isMounted = React.useRef(false);
+  const isSearch = React.useRef<boolean>(false);
+  const isMounted = React.useRef<boolean>(false);
 
-  const itemsIds = useSelector(selectPizzasIds);
-  const {status} = useSelector(state => state.pizzas)
+  const itemsIds: EntityId[] = useAppSelector(selectPizzasIds);
+  const { status, pageCount } = useAppSelector((state) => state.pizzas);
 
-  const { currentCategory, searchValue, sort, currentPage } = useSelector(
+  const { currentCategory, searchValue, sort, currentPage } = useAppSelector(
     (state) => state.filter
   );
-  const dispatch = useDispatch();
+  //Add "AppDispatch" because
+  // https://redux-toolkit.js.org/tutorials/typescript#define-typed-hooks
+  const dispatch = useAppDispatch();
   const navigator = useNavigate();
 
   React.useEffect(() => {
@@ -45,8 +52,8 @@ const Home = () => {
   React.useEffect(() => {
     if (window.location.search) {
       const params = QueryString.parse(window.location.search.slice(1));
-
       const readyQueryParams = checkQueryParams(params);
+
       dispatch(setAllFilters(readyQueryParams));
 
       isSearch.current = true;
@@ -66,24 +73,28 @@ const Home = () => {
   const skeleton = [...new Array(4)].map((_, index) => (
     <Skeleton key={index} />
   ));
-  const pizzas = itemsIds.map((pizzaId) => <PizzaBlock key={pizzaId} pizzaId={pizzaId} />);
+  const pizzas = itemsIds.map((pizzaId) => (
+    <PizzaBlock key={pizzaId} pizzaId={pizzaId} />
+  ));
 
   return (
     <div className={styles.content}>
-      <div className='container'>
+      <div className="container">
         <div className={styles.topBar}>
-          <Categories />
-          <Sort />
+          <Categories currentCategory={currentCategory} />
+          <Sort {...sort} />
         </div>
         <h2 className={styles.title}>Все пиццы</h2>
-        {status === 'error' ? (
+        {status === StatusEnum.ERROR ? (
           <Error />
         ) : (
           <div className={styles.items}>
-            {status === 'pending' ? skeleton : pizzas}
+            {status === StatusEnum.PENDING ? skeleton : pizzas}
           </div>
         )}
-        <Pagination active={currentPage} pageRangeDisplay={4} />
+        {status === StatusEnum.FULLFILLED && (
+          <Pagination pageCount={pageCount} currentPage={currentPage} />
+        )}
       </div>
     </div>
   );
