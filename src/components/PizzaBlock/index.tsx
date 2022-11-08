@@ -31,8 +31,6 @@ interface IPizzaState {
 }
 
 const PizzaBlock: React.FC<IPizzaBlockProps> = React.memo(({ pizzaId }) => {
-  useWhyDidYouUpdate("PizzaBlock", { pizzaId });
-  console.log("re-render");
   const data = useAppSelector((state) => selectPizzaById(state, pizzaId));
   const { id, productId, imageUrl, title, types, sizes, prices } =
     data as IPizzaBlock;

@@ -32,10 +32,28 @@ interface ICartSliceState {
   items: ICartItem[];
 }
 
+const loadFromLS = () => {
+  const json = localStorage.getItem("cart");
+
+  let data = {
+    items: [],
+    totalPrice: 0,
+    totalQuantity: 0,
+  };
+
+  if (json) {
+    data.items = JSON.parse(json);
+    data.totalPrice = refreshPrice(data.items as ICartItem[]);
+    data.totalQuantity = refreshQuantity(data.items as ICartItem[]);
+  }
+
+  return data;
+};
+
 export const initialState: ICartSliceState = {
-  totalPrice: 0,
-  totalQuantity: 0,
-  items: [],
+  totalPrice: loadFromLS().totalPrice,
+  totalQuantity: loadFromLS().totalQuantity,
+  items: loadFromLS().items,
 };
 
 export const cartSlice = createSlice({

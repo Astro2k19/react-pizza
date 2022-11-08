@@ -18,8 +18,12 @@ const Header: React.FC = () => {
   );
 
   const totalPrice: number = useAppSelector(selectTotalPrice);
-
   const totalQuantity: number = useAppSelector(selectTotalQuantity);
+  const { items } = useAppSelector((state) => state.cart);
+
+  React.useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(items));
+  }, [items]);
 
   return (
     <div className={styles.header}>
