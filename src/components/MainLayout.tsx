@@ -8,21 +8,24 @@ import PizzaBlockSingle from "./PizzaBlock/PizzaBlockSingle";
 import Cart from "../pages/Cart";
 import EmptyCart from "./EmptyCart";
 import NotFound from "../pages/NotFound";
-import store from "../redux/store";
+import { store, persistor } from "../redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const MainLayout: React.FC = () => {
   return (
     <BrowserRouter>
       <Provider store={store}>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="/" index element={<Home />} />
-            <Route path="pizza/:pizzaId" element={<PizzaBlockSingle />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="empty-cart" element={<EmptyCart />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+        <PersistGate loading={null} persistor={persistor}>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route path="/" index element={<Home />} />
+              <Route path="pizza/:pizzaId" element={<PizzaBlockSingle />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="empty-cart" element={<EmptyCart />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   );

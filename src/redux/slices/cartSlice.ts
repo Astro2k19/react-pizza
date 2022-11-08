@@ -51,9 +51,9 @@ const loadFromLS = () => {
 };
 
 export const initialState: ICartSliceState = {
-  totalPrice: loadFromLS().totalPrice,
-  totalQuantity: loadFromLS().totalQuantity,
-  items: loadFromLS().items,
+  totalPrice: 0,
+  totalQuantity: 0,
+  items: [],
 };
 
 export const cartSlice = createSlice({
