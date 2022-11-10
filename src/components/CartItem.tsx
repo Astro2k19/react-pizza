@@ -3,7 +3,7 @@ import { addItem, minusItem, removeItem } from "../redux/slices/cartSlice";
 import * as React from "react";
 import { ICartItem } from "../redux/slices/cartSlice";
 
-const CartItem: React.FC<ICartItem> = ({
+export const CartItem: React.FC<ICartItem> = ({
   productId,
   imageUrl,
   title,
@@ -130,5 +130,3 @@ const CartItem: React.FC<ICartItem> = ({
     </div>
   );
 };
-
-export default CartItem;

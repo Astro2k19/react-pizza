@@ -1,10 +1,13 @@
 import React from "react";
-import Categories from "../components/Сategory/index";
-import Sort from "../components/Sort/index";
-import PizzaBlock from "../components/PizzaBlock/index";
-import Skeleton from "../components/PizzaBlock/Skeleton";
+import {
+  Categories,
+  Sort,
+  PizzaBlock,
+  Skeleton,
+  Pagination,
+  Error,
+} from "../components";
 import styles from "../App.module.scss";
-import Pagination from "../components/Pagination/index";
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -15,7 +18,6 @@ import {
 import QueryString from "qs";
 import { setAllFilters } from "../redux/slices/filterSlice";
 import { checkQueryParams } from "../utils/utils";
-import Error from "../components/Error";
 import { EntityId } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 

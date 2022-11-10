@@ -1,10 +1,9 @@
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Link } from "react-router-dom";
-import CartItem from "../components/CartItem";
-import EmptyCart from "../components/EmptyCart";
+import { CartItem, EmptyCart } from "../components";
 import { clearCart } from "../redux/slices/cartSlice";
 
-const Cart = () => {
+export const Cart = () => {
   const { items, totalPrice, totalQuantity } = useAppSelector(
     (state) => state.cart
   );
@@ -142,4 +141,3 @@ const Cart = () => {
     </>
   );
 };
-export default Cart;

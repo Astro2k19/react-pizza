@@ -1,15 +1,15 @@
-import React from 'react';
-import styles from './Search.module.scss';
-import searchIcon from '../../assets/img/search.svg';
-import clearIcon from '../../assets/img/clear.svg';
-import { setSearch } from '../../redux/slices/filterSlice';
+import React from "react";
+import styles from "./Search.module.scss";
+import searchIcon from "../../assets/img/search.svg";
+import clearIcon from "../../assets/img/clear.svg";
+import { setSearch } from "../../redux/slices/filterSlice";
 
-import { useDispatch } from 'react-redux';
-import debounce from 'lodash.debounce';
+import { useDispatch } from "react-redux";
+import debounce from "lodash.debounce";
 
-const Search: React.FC = () => {
+export const Search: React.FC = () => {
   const dispatch = useDispatch();
-  const [searchValue, setSearchValue] = React.useState<string>('');
+  const [searchValue, setSearchValue] = React.useState<string>("");
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const delay = React.useCallback(
@@ -24,18 +24,20 @@ const Search: React.FC = () => {
     delay(event);
   };
 
-  const clearSearchInput: React.MouseEventHandler = (e: React.MouseEvent<HTMLImageElement>) => {
-    setSearchValue('');
-    dispatch(setSearch(''));
+  const clearSearchInput: React.MouseEventHandler = (
+    e: React.MouseEvent<HTMLImageElement>
+  ) => {
+    setSearchValue("");
+    dispatch(setSearch(""));
     inputRef.current?.focus();
   };
 
   return (
     <div className={styles.root}>
-      <img src={searchIcon} className={styles.searchIcon} alt='search icon' />
+      <img src={searchIcon} className={styles.searchIcon} alt="search icon" />
       <input
-        type='text'
-        name='search'
+        type="text"
+        name="search"
         ref={inputRef}
         value={searchValue}
         className={styles.search}
@@ -45,12 +47,10 @@ const Search: React.FC = () => {
         <img
           src={clearIcon}
           className={styles.clearIcon}
-          alt='clear icon'
+          alt="clear icon"
           onClick={clearSearchInput}
         />
       )}
     </div>
   );
 };
-
-export default Search;

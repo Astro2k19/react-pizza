@@ -8,7 +8,7 @@ interface IPaginationProps {
   currentPage: number;
 }
 
-const Pagination: React.FC<IPaginationProps> = React.memo(
+export const Pagination: React.FC<IPaginationProps> = React.memo(
   ({ pageCount, currentPage }) => {
     const dispatch = useAppDispatch();
 
@@ -68,5 +68,3 @@ const Pagination: React.FC<IPaginationProps> = React.memo(
     );
   }
 );
-
-export default Pagination;

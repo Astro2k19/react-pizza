@@ -24,7 +24,7 @@ interface IPizza {
   types?: number[];
 }
 
-const PizzaBlockSingle: React.FC = () => {
+export const PizzaBlockSingle: React.FC = () => {
   const params = useParams();
 
   const [id = "", productId = ""] = params?.pizzaId?.split("_") || "";
@@ -195,4 +195,3 @@ const PizzaBlockSingle: React.FC = () => {
 
   return content;
 };
-export default PizzaBlockSingle;

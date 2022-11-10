@@ -16,29 +16,29 @@ const categories = [
   "Закрытые",
 ];
 
-const Categories: React.FC<ICategories> = React.memo(({ currentCategory }) => {
-  const dispatch = useAppDispatch();
+export const Categories: React.FC<ICategories> = React.memo(
+  ({ currentCategory }) => {
+    const dispatch = useAppDispatch();
 
-  const toggleCategory = (index: number) => {
-    dispatch(setCategory(index));
-    dispatch(setPage(1));
-  };
+    const toggleCategory = (index: number) => {
+      dispatch(setCategory(index));
+      dispatch(setPage(1));
+    };
 
-  return (
-    <div className={styles.categories}>
-      <ul>
-        {categories.map((category, index) => (
-          <li
-            key={index}
-            className={currentCategory === index ? styles.active : ""}
-            onClick={() => toggleCategory(index)}
-          >
-            {category}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-});
-
-export default Categories;
+    return (
+      <div className={styles.categories}>
+        <ul>
+          {categories.map((category, index) => (
+            <li
+              key={index}
+              className={currentCategory === index ? styles.active : ""}
+              onClick={() => toggleCategory(index)}
+            >
+              {category}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+);

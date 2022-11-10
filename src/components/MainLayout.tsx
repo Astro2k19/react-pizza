@@ -4,10 +4,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import App from "../App";
 import Home from "../pages/Home";
-import PizzaBlockSingle from "./PizzaBlock/PizzaBlockSingle";
-import Cart from "../pages/Cart";
-import EmptyCart from "./EmptyCart";
-import NotFound from "../pages/NotFound";
+import { PizzaBlockSingle, EmptyCart } from "./index.js";
+import { Cart } from "../pages/Cart";
+import { NotFoud } from "../pages/NotFound";
+
 import { store, persistor } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -22,7 +22,7 @@ const MainLayout: React.FC = () => {
               <Route path="pizza/:pizzaId" element={<PizzaBlockSingle />} />
               <Route path="cart" element={<Cart />} />
               <Route path="empty-cart" element={<EmptyCart />} />
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<NotFoud />} />
             </Route>
           </Routes>
         </PersistGate>

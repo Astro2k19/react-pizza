@@ -1,13 +1,13 @@
 import styles from "./Header.module.scss";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../../assets/img/pizza-logo.svg";
-import Search from "../Search";
+import { Search } from "../Search";
 import { createSelector } from "@reduxjs/toolkit";
 import React from "react";
 import { RootState } from "../../redux/store";
 import { useAppSelector } from "../../redux/hooks";
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const selectTotalPrice = createSelector(
     [(state: RootState) => state.cart.totalPrice],
     (totalPrice: number) => totalPrice
@@ -19,11 +19,6 @@ const Header: React.FC = () => {
 
   const totalPrice: number = useAppSelector(selectTotalPrice);
   const totalQuantity: number = useAppSelector(selectTotalQuantity);
-  const { items } = useAppSelector((state) => state.cart);
-
-  // React.useEffect(() => {
-  //   localStorage.setItem("cart", JSON.stringify(items));
-  // }, [items]);
 
   return (
     <div className={styles.header}>
@@ -76,5 +71,3 @@ const Header: React.FC = () => {
     </div>
   );
 };
-
-export default Header;
